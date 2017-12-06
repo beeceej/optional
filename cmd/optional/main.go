@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	opt "github.com/beeceej/optional/optional"
+	opt "github.com/beeceej/optional"
 )
 
 func add1(v opt.Any) opt.Any {
