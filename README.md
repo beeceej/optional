@@ -11,5 +11,4 @@ Use in production at your own peril. This is more an excercise in determining ho
 ## Todo...
 
 * Tests?
-* Ideas?
-  * please contribute!
+* Ideas? Please contribute!
