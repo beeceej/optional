@@ -15,6 +15,13 @@ func Of(d Any) optional {
 	}
 }
 
+// OfNil returns an optional container containing nil
+func OfNil() optional {
+	return optional{
+		data: [1]Any{nil},
+	}
+}
+
 // Exist checks if a value exists in the optional
 func (o optional) Exist() bool {
 	return o.data[0] != nil
