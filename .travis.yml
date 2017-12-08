@@ -11,7 +11,5 @@ matrix:
   fast_finish: true
 install:
   - go install
-before_script:
-  - go fmt vet lint
 script:
   - go test
