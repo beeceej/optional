@@ -1,24 +1,29 @@
 package optional
 
+import "errors"
+
 type optional struct {
-	data [1]Any
+	data     [1]Any
+	canBeNil bool
 }
 
 // Any represents an empty interface{}
 // friendlier version instead of using interface{} everywhere
 type Any interface{}
 
-// Of returns an optional of the value given
-func Of(d Any) optional {
+// OfNillable returns an optional of the value given which may be nil
+func OfNillable(a Any) optional {
 	return optional{
-		data: [1]Any{d},
+		data:     [1]Any{a},
+		canBeNil: true,
 	}
 }
 
-// OfNil returns an optional container containing nil
-func OfNil() optional {
+// Of returns an optional container, which may not contain a nil value
+func Of(a Any) optional {
 	return optional{
-		data: [1]Any{nil},
+		data:     [1]Any{a},
+		canBeNil: false,
 	}
 }
 
@@ -37,9 +42,16 @@ func (o optional) Map(f func(d Any) Any) optional {
 			data: [1]Any{f(o.data[0])},
 		}
 	}
+	o.panicIfNil()
 	return optional{data: [1]Any{nil}}
 }
 
 func (o optional) Get() Any {
+
 	return o.data[0]
+}
+func (o optional) panicIfNil() {
+	if !o.canBeNil {
+		panic(errors.New("Value wrapped in optional must not be nil"))
+	}
 }
