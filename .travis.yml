@@ -10,7 +10,7 @@ matrix:
     - go: tip
   fast_finish: true
 install:
-  - go install get-tools
+  - go install
 before_script:
   - go fmt vet lint
 script:
