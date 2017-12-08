@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/beeceej/optional.svg?branch=master)](https://travis-ci.org/beeceej/optional)
+
 # Implementation of Optionals in golang...
 
 Testing out the idea of utilizing a fixed size array as a container denoting the optional presence of a value.
