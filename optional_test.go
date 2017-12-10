@@ -12,7 +12,7 @@ func TestOptionalContainingNilPanics(t *testing.T) {
 			t.Fail()
 		}
 	}
-	testMapOnOptionalContainingValue := func() {
+	testMapOnOptionalContainingValueExpectFunctionCalled := func() {
 		o := Of("a")
 		if doesMapOperationPanic(func(a Any) Any { return a }, o) {
 			t.Fail()
@@ -22,10 +22,27 @@ func TestOptionalContainingNilPanics(t *testing.T) {
 			t.Fail()
 		}
 	}
+	testGetOrErrExpectOptionalWithData := func() {
+		o := Of(nil)
+
+		opt, err := o.GetOrErr()
+		if err == nil || opt.Get() != nil {
+			t.Fail()
+		}
+	}
+	testGetOrErrExpectErr := func() {
+		o := Of("A")
+
+		opt, err := o.GetOrErr()
+		if err != nil || opt.Get() == nil {
+			t.Fail()
+		}
+	}
 
 	testMapOnOptionalOfNilExpectPanic()
-
-	testMapOnOptionalContainingValue()
+	testMapOnOptionalContainingValueExpectFunctionCalled()
+	testGetOrErrExpectOptionalWithData()
+	testGetOrErrExpectErr()
 }
 
 func doesMapOperationPanic(mapFunc func(Any) Any, o optional) (panics bool) {

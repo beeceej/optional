@@ -46,12 +46,26 @@ func (o optional) Map(f func(d Any) Any) optional {
 	return optional{data: [1]Any{nil}}
 }
 
+// Get returns data if present
 func (o optional) Get() Any {
-
 	return o.data[0]
 }
+
 func (o optional) panicIfNil() {
 	if !o.canBeNil {
 		panic(errors.New("Value wrapped in optional must not be nil"))
 	}
+}
+
+// Get returns either the data if it exists, or an error if no data in container
+func (o optional) GetOrErr() (opt optional, err error) {
+	if o.Exist() {
+		opt = optional{
+			data:     [1]Any{o.data},
+			canBeNil: o.canBeNil,
+		}
+		return opt, err
+	}
+	err = errors.New("No data contained in optional container")
+	return opt, err
 }
