@@ -11,6 +11,9 @@ type optional struct {
 // friendlier version instead of using interface{} everywhere
 type Any interface{}
 
+// mapAny is an alias for the function signature used in a map call
+type mapAny func(a Any) Any
+
 // OfNillable returns an optional of the value given which may be nil
 func OfNillable(a Any) optional {
 	return optional{
@@ -36,10 +39,10 @@ func (o optional) Exist() bool {
 // If data exists (as defined by optional.Exist(), then apply the function and return an optional with
 // the result of f inside the optional
 // If data doesn't exist return an empty optional
-func (o optional) Map(f func(d Any) Any) optional {
+func (o optional) Map(m mapAny) optional {
 	if o.Exist() {
 		return optional{
-			data: [1]Any{f(o.data[0])},
+			data: [1]Any{m(o.data[0])},
 		}
 	}
 	o.panicIfNil()
